@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  edu-server:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    environment:
+      - DATASOURCE_URL=jdbc:postgresql://database:5432/edudb
+      - DATASOURCE_NAME=postgres
+      - DATASOURCE_PASSWORD=postgrespw
+    ports:
+      - '8000:8000'
+    links:
+      - database
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: always
+
+  database:
+    image: 'postgres:latest'
+    environment:
+      - POSTGRES_DB=edudb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgrespw
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U dbuser" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
