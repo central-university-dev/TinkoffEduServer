@@ -4,4 +4,7 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
+    <include file="changelog/release-1.0/TINKOFF-EDU-2023-12-01-create-user-table.xml"/>
+    <include file="changelog/release-1.0/TINKOFF-EDU-2023-12-01-create-role-table.xml"/>
+
 </databaseChangeLog>
