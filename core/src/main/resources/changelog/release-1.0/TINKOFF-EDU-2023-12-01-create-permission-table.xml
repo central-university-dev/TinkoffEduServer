@@ -4,8 +4,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-    <changeSet id="TINKOFF-EDU-2023-12-01-create-role-table" author="mdarunova">
-        <createTable tableName="role">
+    <changeSet id="TINKOFF-EDU-2023-12-01-create-permission-table" author="mdarunova">
+        <createTable tableName="permission">
             <column name="id" type="bigint">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -14,9 +14,9 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="TINKOFF-EDU-2023-12-01-create-role-id-seq" author="mdarunova">
+    <changeSet id="TINKOFF-EDU-2023-12-01-create-permission-id-seq" author="mdarunova">
         <createSequence
-                sequenceName="role_seq"
+                sequenceName="permission_seq"
                 startValue="1"
                 incrementBy="1"/>
     </changeSet>

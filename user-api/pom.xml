@@ -2,21 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
-    <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <artifactId>edu-backend</artifactId>
         <groupId>com.tinkoffedu</groupId>
         <version>${revision}</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>core</artifactId>
+    <artifactId>user-api</artifactId>
 
     <dependencies>
+
         <dependency>
             <groupId>com.tinkoffedu</groupId>
-            <artifactId>user-api</artifactId>
+            <artifactId>rest-api</artifactId>
         </dependency>
 
         <dependency>
@@ -61,8 +60,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
         </dependency>
 
         <dependency>
@@ -135,7 +134,7 @@
                         </goals>
                         <configuration>
                             <violationSeverity>warning</violationSeverity>
-                            <configLocation>${project.basedir}/src/main/resources/checkstyle.xml</configLocation>
+                            <configLocation>${project.basedir}/../core/src/main/resources/checkstyle.xml</configLocation>
                         </configuration>
                     </execution>
                 </executions>
@@ -166,11 +165,9 @@
                         <exclude>com/**/config/*.class</exclude>
                         <exclude>com/**/controller/*.class</exclude>
                         <exclude>com/**/exception/**/*.class</exclude>
-                        <exclude>com/tinkoffedu/EduBackendApplication.class</exclude>
                     </excludes>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>

@@ -1,0 +1,25 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="TINKOFF-EDU-2023-12-01-create-user-role-table" author="mdarunova">
+        <createTable tableName="user_role">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_user_role_user"
+                             referencedTableName="person"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="role_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_user_role_role"
+                             referencedTableName="role"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="user_role" columnNames="user_id, role_id"/>
+    </changeSet>
+
+</databaseChangeLog>

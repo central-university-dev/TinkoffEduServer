@@ -1,0 +1,25 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="TINKOFF-EDU-2023-12-01-create-role-permission-table" author="mdarunova">
+        <createTable tableName="role_permission">
+            <column name="role_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_role_permission_role"
+                             referencedTableName="role"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="permission_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_role_permission_permission"
+                             referencedTableName="permission"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="role_permission" columnNames="role_id, permission_id"/>
+    </changeSet>
+
+</databaseChangeLog>
