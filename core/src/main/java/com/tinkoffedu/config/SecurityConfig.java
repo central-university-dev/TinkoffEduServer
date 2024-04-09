@@ -41,7 +41,6 @@ public class SecurityConfig {
     ) throws Exception {
         AuthenticationManagerBuilder managerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         managerBuilder.userDetailsService(userAuthDetailsService).passwordEncoder(passwordEncoder);
-        managerBuilder.authenticationProvider(userDaoAuthenticationProvider);
         return managerBuilder.build();
     }
 
@@ -55,6 +54,7 @@ public class SecurityConfig {
             )
             .httpBasic(withDefaults())
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authenticationProvider(userDaoAuthenticationProvider)
             .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
             .csrf(AbstractHttpConfigurer::disable)
             .exceptionHandling(configurer -> configurer.authenticationEntryPoint(authEntryPoint()))

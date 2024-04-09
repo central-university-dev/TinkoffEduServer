@@ -3,6 +3,7 @@ package com.tinkoffedu.exception.handler;
 import com.tinkoffedu.dto.status.StatusResponse;
 import com.tinkoffedu.exception.InvalidArgumentException;
 import com.tinkoffedu.exception.NotFoundException;
+import com.tinkoffedu.exception.RefreshTokenException;
 import org.postgresql.util.PSQLException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,12 @@ public class ExceptionHandlers {
     })
     public ResponseEntity<StatusResponse> handleBadRequestException(Exception e) {
         var status = HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(new StatusResponse(ERROR_STATUS, e.getMessage()));
+    }
+
+    @ExceptionHandler(RefreshTokenException.class)
+    public ResponseEntity<StatusResponse> handleRefreshTokenException(RefreshTokenException e) {
+        var status = HttpStatus.FORBIDDEN;
         return ResponseEntity.status(status).body(new StatusResponse(ERROR_STATUS, e.getMessage()));
     }
 }

@@ -28,7 +28,7 @@ public class UserAuthAttemptChecker implements UserDetailsChecker {
             LocalDateTime.now().minusMinutes(bruteforceConfig.getPeriod())
         );
         if (bruteforceConfig.getMaxAttempts() - failedAttemptsCount <= 0L) {
-            throw new LockedException("Account is locked :(");
+            throw new LockedException("account is locked :(");
         }
     }
 

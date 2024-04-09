@@ -22,32 +22,15 @@ public class JwtTokenUtils {
 
     @Value("${security.jwt.secret-key}")
     private String secretKey;
-
     @Value("${security.jwt.expiration-time}")
     private Long expirationMinutes;
 
-    public String createToken(String username) {
+    public String createToken(String email) {
         return Jwts.builder()
-            .setClaims(Jwts.claims().setSubject(username))
+            .setClaims(Jwts.claims().setSubject(email))
             .setExpiration(Date.from(Instant.now().plusMillis(TimeUnit.MINUTES.toMillis(expirationMinutes))))
             .signWith(SignatureAlgorithm.HS256, secretKey)
             .compact();
-    }
-
-    private Claims parseJwtClaims(String token) {
-        return token == null ? null : Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
-    }
-
-    public Claims resolveClaims(HttpServletRequest request) {
-        try {
-            return parseJwtClaims(resolveToken(request));
-        } catch (ExpiredJwtException e) {
-            request.setAttribute("JWT is expired", e.getMessage());
-            throw e;
-        } catch (Exception e) {
-            request.setAttribute("JWT is invalid", e.getMessage());
-            throw e;
-        }
     }
 
     public String resolveToken(HttpServletRequest request) {
@@ -55,5 +38,24 @@ public class JwtTokenUtils {
         return token != null && token.startsWith(TOKEN_PREFIX) ? token.substring(TOKEN_PREFIX.length()) : null;
     }
 
+    public Boolean isTokenExpired(Claims claims) {
+        return claims == null || claims.getExpiration().before(new Date());
+    }
+
+    public Claims resolveClaims(HttpServletRequest request) {
+        try {
+            return parseJwtClaims(resolveToken(request));
+        } catch (ExpiredJwtException e) {
+            request.setAttribute("JWT is expired", e.getMessage());
+            return null;
+        } catch (Exception e) {
+            request.setAttribute("JWT is invalid", e.getMessage());
+            return null;
+        }
+    }
+
+    private Claims parseJwtClaims(String token) {
+        return token == null ? null : Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+    }
 
 }

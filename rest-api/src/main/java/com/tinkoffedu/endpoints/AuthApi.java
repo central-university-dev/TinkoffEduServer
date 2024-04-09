@@ -2,6 +2,8 @@ package com.tinkoffedu.endpoints;
 
 import com.tinkoffedu.dto.auth.AuthRequest;
 import com.tinkoffedu.dto.auth.AuthResponse;
+import com.tinkoffedu.dto.auth.RefreshTokenRequest;
+import com.tinkoffedu.dto.auth.RefreshTokenResponse;
 import com.tinkoffedu.dto.status.StatusResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -27,4 +29,8 @@ public interface AuthApi {
     @Operation(summary = "Логин по email и паролю")
     @PostMapping(value = "/auth/login", produces = MediaType.APPLICATION_JSON_VALUE)
     AuthResponse login(@RequestBody AuthRequest request);
+
+    @Operation(summary = "Обновление токена авторизации")
+    @PostMapping(value = "/auth/refresh-token", produces = MediaType.APPLICATION_JSON_VALUE)
+    RefreshTokenResponse refreshToken(@RequestBody RefreshTokenRequest request);
 }

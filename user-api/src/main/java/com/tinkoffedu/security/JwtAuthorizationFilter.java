@@ -16,7 +16,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
@@ -36,7 +35,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             return;
         }
         Claims claims = tokenUtils.resolveClaims(request);
-        if (claims == null || !claims.getExpiration().after(new Date())) {
+        if (claims == null || tokenUtils.isTokenExpired(claims)) {
             filterChain.doFilter(request, response);
             return;
         }
