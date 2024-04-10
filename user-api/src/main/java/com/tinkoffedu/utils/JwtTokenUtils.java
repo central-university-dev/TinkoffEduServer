@@ -1,5 +1,6 @@
 package com.tinkoffedu.utils;
 
+import com.tinkoffedu.dto.UserAuthDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -7,10 +8,12 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -25,11 +28,17 @@ public class JwtTokenUtils {
     @Value("${security.jwt.expiration-time}")
     private Long expirationMinutes;
 
-    public String createToken(String email) {
+    public String createToken(UserAuthDetails user) {
         return Jwts.builder()
-            .setClaims(Jwts.claims().setSubject(email))
             .setExpiration(Date.from(Instant.now().plusMillis(TimeUnit.MINUTES.toMillis(expirationMinutes))))
             .signWith(SignatureAlgorithm.HS256, secretKey)
+            .addClaims(Map.of(
+                "id", user.getId(),
+                "email", user.getEmail(),
+                "authorities", String.join(
+                    ", ", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList()
+                )
+            ))
             .compact();
     }
 

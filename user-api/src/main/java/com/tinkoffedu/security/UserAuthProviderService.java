@@ -23,6 +23,9 @@ public class UserAuthProviderService {
 
     public String getCurrentUserEmail() {
         var principal = getPrincipal();
+        if (principal instanceof String) {
+            return (String) principal;
+        }
         if (principal instanceof UserAuthDetails) {
             return ((UserAuthDetails) principal).getEmail();
         }

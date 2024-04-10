@@ -27,10 +27,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface AuthApi {
 
     @Operation(summary = "Логин по email и паролю")
-    @PostMapping(value = "/auth/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "api/auth/login", produces = MediaType.APPLICATION_JSON_VALUE)
     AuthResponse login(@RequestBody AuthRequest request);
 
     @Operation(summary = "Обновление токена авторизации")
-    @PostMapping(value = "/auth/refresh-token", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "api/auth/refresh-token", produces = MediaType.APPLICATION_JSON_VALUE)
     RefreshTokenResponse refreshToken(@RequestBody RefreshTokenRequest request);
 }

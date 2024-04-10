@@ -21,9 +21,9 @@ public class UserFailedLoginService {
 
     public void logFailedUserAttempt(String email) {
         try {
-            var user = (UserAuthDetails) userAuthDetailsService.loadUserByUsername(email);
+            var userDetails = (UserAuthDetails) userAuthDetailsService.loadUserByUsername(email);
             var userLog = new UserFailedLogin()
-                .setUserId(user.getId())
+                .setUserId(userDetails.getId())
                 .setDate(LocalDateTime.now());
             userFailedLoginRepository.save(userLog);
         } catch (UsernameNotFoundException e) {

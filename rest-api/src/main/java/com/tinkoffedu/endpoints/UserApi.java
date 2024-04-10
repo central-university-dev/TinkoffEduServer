@@ -27,18 +27,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface UserApi {
 
     @Operation(summary = "Создать пользователя")
-    @PostMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/api/user/register", produces = MediaType.APPLICATION_JSON_VALUE)
     StatusResponse createUser(@RequestBody UserRequest dto);
 
     @Operation(summary = "Получить пользователя")
-    @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/api/user/profile", produces = MediaType.APPLICATION_JSON_VALUE)
     UserResponse getUser();
 
     @Operation(summary = "Обновить пользователя")
-    @PutMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/api/user/update", produces = MediaType.APPLICATION_JSON_VALUE)
     StatusResponse updateUser(@RequestBody UserRequest dto);
 
     @Operation(summary = "Удалить пользователя")
-    @DeleteMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/api/user/delete", produces = MediaType.APPLICATION_JSON_VALUE)
     StatusResponse deleteUser();
 }

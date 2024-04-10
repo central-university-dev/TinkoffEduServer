@@ -1,5 +1,6 @@
 package com.tinkoffedu.security;
 
+import com.tinkoffedu.dto.UserAuthDetails;
 import com.tinkoffedu.utils.JwtTokenUtils;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
@@ -10,12 +11,16 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -39,10 +44,24 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+        List<GrantedAuthority> authorities = parseAuthorities(claims.get("authorities", String.class));
+        UserAuthDetails userDetails = UserAuthDetails.builder()
+            .id(claims.get("id", Long.class))
+            .email(claims.get("email", String.class))
+            .authorities(authorities)
+            .password(null)
+            .build();
         Authentication authentication = new UsernamePasswordAuthenticationToken(
-            claims.getSubject(), null, Collections.emptyList()
+            userDetails, null, authorities
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
+    }
+
+    private List<GrantedAuthority> parseAuthorities(String authorities) {
+        return authorities == null ? Collections.emptyList() : Arrays.stream(authorities.split(", "))
+            .filter(privilege -> !privilege.isBlank())
+            .map(privilege -> (GrantedAuthority) new SimpleGrantedAuthority(privilege))
+            .toList();
     }
 }

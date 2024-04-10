@@ -6,10 +6,13 @@ import com.tinkoffedu.dto.auth.AuthResponse;
 import com.tinkoffedu.dto.auth.RefreshTokenRequest;
 import com.tinkoffedu.dto.auth.RefreshTokenResponse;
 import com.tinkoffedu.endpoints.AuthApi;
+import com.tinkoffedu.entity.User;
 import com.tinkoffedu.entity.UserRefreshToken;
 import com.tinkoffedu.exception.InvalidArgumentException;
+import com.tinkoffedu.mapper.UserAuthDetailsMapper;
 import com.tinkoffedu.service.UserRefreshTokenService;
 import com.tinkoffedu.utils.JwtTokenUtils;
+import com.tinkoffedu.utils.UserPermissionUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,16 +28,18 @@ public class AuthController implements AuthApi {
 
     private final AuthenticationManager authenticationManager;
     private final UserRefreshTokenService userRefreshTokenService;
+    private final UserPermissionUtils userPermissionUtils;
+    private final UserAuthDetailsMapper userAuthDetailsMapper;
     private final JwtTokenUtils tokenUtils;
 
     @Override
     public AuthResponse login(AuthRequest request) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.email(), request.password())
+                new UsernamePasswordAuthenticationToken(request.email().toLowerCase(), request.password())
             );
             UserAuthDetails userDetails = (UserAuthDetails) authentication.getPrincipal();
-            String accessToken = tokenUtils.createToken(userDetails.getEmail());
+            String accessToken = tokenUtils.createToken(userDetails);
             UserRefreshToken refreshToken = userRefreshTokenService.createRefreshToken(userDetails.getId());
             return new AuthResponse(accessToken, refreshToken.getRefreshToken());
         } catch (BadCredentialsException e) {
@@ -47,7 +52,10 @@ public class AuthController implements AuthApi {
     @Override
     public RefreshTokenResponse refreshToken(RefreshTokenRequest request) {
         UserRefreshToken refreshToken = userRefreshTokenService.updateRefreshToken(request.refreshToken());
-        String accessToken = tokenUtils.createToken(refreshToken.getUser().getEmail());
+        User user = refreshToken.getUser();
+        String accessToken = tokenUtils.createToken(
+            userAuthDetailsMapper.map(user, userPermissionUtils.getAllowedAuthorities(user.getRoles()))
+        );
         return new RefreshTokenResponse(accessToken,  refreshToken.getRefreshToken());
     }
 }

@@ -49,7 +49,7 @@ public class SecurityConfig {
         return http
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/auth/**", /*"/user/**",*/ "/error/**", "/swagger/**", "/v3/api-docs/**").permitAll()
+                    "api/auth/**", "api/user/register", "/error/**", "/swagger/**", "/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated()
             )
             .httpBasic(withDefaults())
