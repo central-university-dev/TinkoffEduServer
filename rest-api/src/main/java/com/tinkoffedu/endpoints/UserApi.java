@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,14 +31,14 @@ public interface UserApi {
     StatusResponse createUser(@RequestBody UserRequest dto);
 
     @Operation(summary = "Получить пользователя")
-    @GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    UserResponse getUser(@PathVariable("id") Long id);
+    @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    UserResponse getUser();
 
     @Operation(summary = "Обновить пользователя")
-    @PutMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    StatusResponse updateUser(@PathVariable("id") Long id, @RequestBody UserRequest dto);
+    @PutMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    StatusResponse updateUser(@RequestBody UserRequest dto);
 
     @Operation(summary = "Удалить пользователя")
-    @DeleteMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    StatusResponse deleteUser(@PathVariable("id") Long id);
+    @DeleteMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    StatusResponse deleteUser();
 }

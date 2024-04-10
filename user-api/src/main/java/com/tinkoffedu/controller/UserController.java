@@ -4,6 +4,7 @@ import com.tinkoffedu.dto.status.StatusResponse;
 import com.tinkoffedu.dto.user.UserRequest;
 import com.tinkoffedu.dto.user.UserResponse;
 import com.tinkoffedu.endpoints.UserApi;
+import com.tinkoffedu.security.UserAuthProviderService;
 import com.tinkoffedu.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,28 +15,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController implements UserApi {
 
-    private final UserService service;
+    private final UserAuthProviderService authProviderService;
+    private final UserService userService;
 
     @Override
     public StatusResponse createUser(UserRequest dto) {
-        service.createUser(dto);
+        userService.createUser(dto);
         return new StatusResponse("ok", null);
     }
 
     @Override
-    public UserResponse getUser(Long id) {
-        return service.getUser(id);
+    public UserResponse getUser() {
+        Long id = authProviderService.getCurrentUserId();
+        return userService.getUser(id);
     }
 
     @Override
-    public StatusResponse updateUser(Long id, UserRequest dto) {
-        service.updateUser(id, dto);
+    public StatusResponse updateUser(UserRequest dto) {
+        Long id = authProviderService.getCurrentUserId();
+        userService.updateUser(id, dto);
         return new StatusResponse("ok", null);
     }
 
     @Override
-    public StatusResponse deleteUser(Long id) {
-        service.deleteUser(id);
+    public StatusResponse deleteUser() {
+        Long id = authProviderService.getCurrentUserId();
+        userService.deleteUser(id);
         return new StatusResponse("ok", null);
     }
 

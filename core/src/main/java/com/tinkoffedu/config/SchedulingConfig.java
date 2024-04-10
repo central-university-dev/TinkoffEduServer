@@ -11,10 +11,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.sql.DataSource;
 
-@ConditionalOnProperty(value = "job.scheduling.enable", havingValue = "true", matchIfMissing = true)
+
 @Configuration
 @EnableScheduling
 @EnableSchedulerLock(defaultLockAtLeastFor = "PT1S", defaultLockAtMostFor = "PT1H")
+@ConditionalOnProperty(value = "job.scheduling.enable", havingValue = "true", matchIfMissing = true)
 public class SchedulingConfig {
 
     @Bean
