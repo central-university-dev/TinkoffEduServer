@@ -64,4 +64,20 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserRefreshToken> userRefreshTokens = new ArrayList<>();
 
+    public void addRole(Role role) {
+        roles.add(role);
+        role.getUsers().add(this);
+    }
+
+    public void removeRole(Role role) {
+        roles.remove(role);
+        role.getUsers().remove(this);
+    }
+
+    public boolean hasRole(String roleName) {
+        return roles.stream()
+            .map(Role::getName)
+            .anyMatch(roleName::equalsIgnoreCase);
+    }
+
 }

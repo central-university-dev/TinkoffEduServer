@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface UserFailedLoginRepository extends JpaRepository<UserFailedLogin, Long> {
 
     Optional<Long> countByUserIdAndDateGreaterThanEqual(Long userId, LocalDateTime failedLoginStart);
+
 }

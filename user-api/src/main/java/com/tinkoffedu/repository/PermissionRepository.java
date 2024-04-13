@@ -1,14 +1,14 @@
 package com.tinkoffedu.repository;
 
-import com.tinkoffedu.entity.User;
+import com.tinkoffedu.entity.Permission;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface PermissionRepository extends JpaRepository<Permission, Long> {
 
-    Optional<User> findByEmail(String email);
+    Optional<Permission> findByName(String name);
 
 }

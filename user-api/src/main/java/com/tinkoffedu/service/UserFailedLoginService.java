@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -31,6 +32,7 @@ public class UserFailedLoginService {
         }
     }
 
+    @Transactional(readOnly = true)
     public long getUserFailedLoginAttempts(Long userId, LocalDateTime timestamp) {
         return userFailedLoginRepository.countByUserIdAndDateGreaterThanEqual(userId, timestamp).orElse(0L);
     }

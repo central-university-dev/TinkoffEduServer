@@ -1,0 +1,26 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="TINKOFF-EDU-2023-12-04-insert-default-roles" author="mdarunova">
+        <insert tableName="role">
+            <column name="id" valueComputed="nextval('role_seq')"/>
+            <column name="name" value="ROLE_ADMIN"/>
+        </insert>
+        <insert tableName="role">
+            <column name="id" valueComputed="nextval('role_seq')"/>
+            <column name="name" value="ROLE_STAFF"/>
+        </insert>
+        <insert tableName="role">
+            <column name="id" valueComputed="nextval('role_seq')"/>
+            <column name="name" value="ROLE_MENTOR"/>
+        </insert>
+        <insert tableName="role">
+            <column name="id" valueComputed="nextval('role_seq')"/>
+            <column name="name" value="ROLE_STUDENT"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

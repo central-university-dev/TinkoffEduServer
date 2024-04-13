@@ -9,16 +9,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.PreRemove;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @Setter
+@Accessors(chain = true)
 @Entity
 @Table(name = "role")
 @SequenceGenerator(allocationSize = 1, name = "role_seq", sequenceName = "role_seq")
@@ -42,5 +45,27 @@ public class Role {
         inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id")
     )
     private Set<Permission> permissions = new HashSet<>();
+
+    @PreRemove
+    private void removeRoleFromUsers() {
+        users.forEach(user -> user.getRoles().remove(this));
+        permissions.forEach(permission -> permission.getRoles().remove(this));
+    }
+
+    public void addPermission(Permission permission) {
+        permissions.add(permission);
+        permission.getRoles().add(this);
+    }
+
+    public void removePermission(Permission permission) {
+        permissions.remove(permission);
+        permission.getRoles().remove(this);
+    }
+
+    public boolean hasPermission(String permissionName) {
+        return permissions.stream()
+            .map(Permission::getName)
+            .anyMatch(permissionName::equalsIgnoreCase);
+    }
 
 }

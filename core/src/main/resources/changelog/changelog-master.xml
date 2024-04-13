@@ -12,5 +12,6 @@
     <include file="changelog/release-1.0/TINKOFF-EDU-2023-12-01-create-user-failed-login-table.xml"/>
     <include file="changelog/release-1.0/TINKOFF-EDU-2023-12-02-create-user-refresh-token-table.xml"/>
     <include file="changelog/release-1.0/TINKOFF-EDU-2023-12-03-create-shedlock-table.xml"/>
+    <include file="changelog/release-1.0/TINKOFF-EDU-2023-12-04-insert-default-roles.xml"/>
 
 </databaseChangeLog>

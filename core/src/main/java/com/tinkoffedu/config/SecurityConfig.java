@@ -48,8 +48,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "api/auth/**", "api/user/register", "/error/**", "/swagger/**", "/v3/api-docs/**").permitAll()
+                .requestMatchers("/error/**", "/swagger/**", "/v3/api-docs/**").permitAll()
+                .requestMatchers("/api/auth/**", "/api/user/register").permitAll()
                 .anyRequest().authenticated()
             )
             .httpBasic(withDefaults())

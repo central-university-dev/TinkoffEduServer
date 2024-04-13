@@ -2,10 +2,12 @@ package com.tinkoffedu.service;
 
 import com.tinkoffedu.dto.user.UserRequest;
 import com.tinkoffedu.dto.user.UserResponse;
+import com.tinkoffedu.entity.Role;
 import com.tinkoffedu.entity.User;
 import com.tinkoffedu.exception.InvalidArgumentException;
 import com.tinkoffedu.exception.NotFoundException;
 import com.tinkoffedu.mapper.UserMapper;
+import com.tinkoffedu.repository.RoleRepository;
 import com.tinkoffedu.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,8 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService {
 
+    private static final String DEFAULT_ROLE_NAME = "ROLE_STUDENT";
+
     private final UserRepository repository;
     private final UserMapper mapper;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -28,7 +33,14 @@ public class UserService {
             user -> {
                 throw new InvalidArgumentException("User with email %s already exists".formatted(user.getEmail()));
             },
-            () -> repository.save(mapper.map(dto, passwordEncoder))
+            () -> {
+                var defaultRole = roleRepository.findByName(DEFAULT_ROLE_NAME).orElseThrow(
+                    () -> new NotFoundException(Role.class)
+                );
+                var user = mapper.map(dto, passwordEncoder);
+                user.addRole(defaultRole);
+                repository.save(user);
+            }
         );
     }
 
@@ -49,11 +61,8 @@ public class UserService {
         );
         var user = mapper.map(dto)
             .setId(existingUser.getId())
-            .setPassword(existingUser.getPassword())
+            .setPassword(dto.password() == null ? existingUser.getPassword() : passwordEncoder.encode(dto.password()))
             .setRoles(existingUser.getRoles());
-        if (dto.password() != null) {
-            user.setPassword(passwordEncoder.encode(dto.password()));
-        }
         repository.save(user);
     }
 
