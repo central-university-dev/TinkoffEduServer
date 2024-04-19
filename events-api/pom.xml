@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>user-api</artifactId>
+    <artifactId>events-api</artifactId>
 
     <dependencies>
         <dependency>
@@ -71,6 +71,11 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.hypersistence</groupId>
+            <artifactId>hypersistence-utils-hibernate-55</artifactId>
         </dependency>
 
         <dependency>
@@ -179,4 +184,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

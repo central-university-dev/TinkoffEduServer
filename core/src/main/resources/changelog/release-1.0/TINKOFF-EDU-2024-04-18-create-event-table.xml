@@ -1,0 +1,38 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="TINKOFF-EDU-2024-04-18-create-event-table" author="mdarunova">
+        <createTable tableName="event">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(256)"/>
+            <column name="open_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="close_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_filename" type="varchar(256)"/>
+            <column name="quiz_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_event_quiz_quiz"
+                             referencedTableName="quiz"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="TINKOFF-EDU-2024-04-18-create-event-id-seq" author="mdarunova">
+        <createSequence
+                sequenceName="event_seq"
+                startValue="1"
+                incrementBy="1"/>
+    </changeSet>
+
+</databaseChangeLog>
