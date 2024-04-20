@@ -1,10 +1,12 @@
 package com.tinkoffedu.controller;
 
-import com.tinkoffedu.dto.event.EventRequestDto;
-import com.tinkoffedu.dto.event.EventResponseDto;
-import com.tinkoffedu.dto.quiz.QuizRequestDto;
+import com.tinkoffedu.dto.event.EventRequest;
+import com.tinkoffedu.dto.event.EventResponse;
+import com.tinkoffedu.dto.quiz.QuizRequest;
 import com.tinkoffedu.dto.status.StatusResponse;
 import com.tinkoffedu.endpoints.EventApi;
+import com.tinkoffedu.service.EventService;
+import com.tinkoffedu.service.QuizService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,34 +16,39 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class EventController implements EventApi {
 
+    private final EventService eventService;
+    private final QuizService quizService;
 
     @Override
-    public StatusResponse createEvent(EventRequestDto dto) {
-        return null;
+    public EventResponse createEvent(EventRequest dto) {
+        return eventService.createEvent(dto);
     }
 
     @Override
-    public EventResponseDto getEvent(Long id) {
-        return null;
+    public EventResponse getEvent(Long id) {
+        return eventService.getEvent(id);
     }
 
     @Override
-    public StatusResponse updateEvent(Long id, EventRequestDto dto) {
-        return null;
+    public EventResponse updateEvent(Long id, EventRequest dto) {
+        return eventService.updateEvent(id, dto);
     }
 
     @Override
     public StatusResponse deleteEvent(Long id) {
-        return null;
+        eventService.deleteEvent(id);
+        return new StatusResponse("ok", null);
     }
 
     @Override
-    public StatusResponse addEventQuiz(Long id, QuizRequestDto dto) {
-        return null;
+    public EventResponse addEventQuiz(Long id, QuizRequest dto) {
+        var quiz = quizService.createQuiz(dto);
+        return eventService.addEventQuiz(id, quiz);
     }
 
     @Override
-    public StatusResponse updateEventQuiz(Long id, QuizRequestDto dto) {
-        return null;
+    public EventResponse updateEventQuiz(Long id, QuizRequest dto) {
+        quizService.updateQuiz(dto);
+        return eventService.getEvent(id);
     }
 }

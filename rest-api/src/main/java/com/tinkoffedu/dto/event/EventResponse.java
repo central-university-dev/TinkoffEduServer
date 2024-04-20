@@ -1,13 +1,16 @@
 package com.tinkoffedu.dto.event;
 
+import com.tinkoffedu.dto.quiz.QuizResponse;
+
 import java.time.Instant;
 
-public record EventRequestDto(
+public record EventResponse(
     Long id,
     String name,
     String description,
     Instant openDate,
-    Instant closeDate
+    Instant closeDate,
+    QuizResponse quiz
 ) {
 
 }

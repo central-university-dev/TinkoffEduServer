@@ -53,7 +53,7 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUser(Long id, UserRequest dto) {
+    public UserResponse updateUser(Long id, UserRequest dto) {
         validateRequest(dto);
 
         var existingUser = repository.findById(id).orElseThrow(
@@ -63,7 +63,7 @@ public class UserService {
             .setId(existingUser.getId())
             .setPassword(dto.password() == null ? existingUser.getPassword() : passwordEncoder.encode(dto.password()))
             .setRoles(existingUser.getRoles());
-        repository.save(user);
+        return mapper.map(repository.save(user));
     }
 
     @Transactional

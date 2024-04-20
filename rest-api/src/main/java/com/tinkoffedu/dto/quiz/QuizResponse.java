@@ -2,7 +2,7 @@ package com.tinkoffedu.dto.quiz;
 
 import java.util.List;
 
-public record QuizResponseDto(
+public record QuizResponse(
     Long id,
     String name,
     String description,

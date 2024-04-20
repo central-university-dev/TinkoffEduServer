@@ -31,10 +31,9 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public StatusResponse updateUser(UserRequest dto) {
+    public UserResponse updateUser(UserRequest dto) {
         Long id = authProviderService.getCurrentUserId();
-        userService.updateUser(id, dto);
-        return new StatusResponse("ok", null);
+        return userService.updateUser(id, dto);
     }
 
     @Override

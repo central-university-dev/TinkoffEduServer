@@ -1,11 +1,9 @@
 package com.tinkoffedu.endpoints;
 
-import com.tinkoffedu.dto.event.EventRequestDto;
-import com.tinkoffedu.dto.event.EventResponseDto;
-import com.tinkoffedu.dto.quiz.QuizRequestDto;
+import com.tinkoffedu.dto.event.EventRequest;
+import com.tinkoffedu.dto.event.EventResponse;
+import com.tinkoffedu.dto.quiz.QuizRequest;
 import com.tinkoffedu.dto.status.StatusResponse;
-import com.tinkoffedu.dto.user.UserRequest;
-import com.tinkoffedu.dto.user.UserResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -32,15 +30,15 @@ public interface EventApi {
 
     @Operation(summary = "Создать мероприятие")
     @PostMapping(value = "/api/event/create", produces = MediaType.APPLICATION_JSON_VALUE)
-    StatusResponse createEvent(@RequestBody EventRequestDto dto);
+    EventResponse createEvent(@RequestBody EventRequest dto);
 
     @Operation(summary = "Получить мероприятие")
     @GetMapping(value = "/api/event/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    EventResponseDto getEvent(@PathVariable("id") Long id);
+    EventResponse getEvent(@PathVariable("id") Long id);
 
     @Operation(summary = "Обновить мероприятие")
     @PutMapping(value = "/api/event/{id}/update", produces = MediaType.APPLICATION_JSON_VALUE)
-    StatusResponse updateEvent(@PathVariable("id") Long id, @RequestBody EventRequestDto dto);
+    EventResponse updateEvent(@PathVariable("id") Long id, @RequestBody EventRequest dto);
 
     @Operation(summary = "Удалить мероприятие")
     @DeleteMapping(value = "/api/event/{id}/delete", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,9 +46,9 @@ public interface EventApi {
 
     @Operation(summary = "Добавить квиз мероприятия")
     @PutMapping(value = "/api/event/{id}/add-quiz", produces = MediaType.APPLICATION_JSON_VALUE)
-    StatusResponse addEventQuiz(@PathVariable("id") Long id, @RequestBody QuizRequestDto dto);
+    EventResponse addEventQuiz(@PathVariable("id") Long id, @RequestBody QuizRequest dto);
 
     @Operation(summary = "Обновить квиз мероприятия")
     @PutMapping(value = "/api/event/{id}/update-quiz", produces = MediaType.APPLICATION_JSON_VALUE)
-    StatusResponse updateEventQuiz(@PathVariable("id") Long id, @RequestBody QuizRequestDto dto);
+    EventResponse updateEventQuiz(@PathVariable("id") Long id, @RequestBody QuizRequest dto);
 }

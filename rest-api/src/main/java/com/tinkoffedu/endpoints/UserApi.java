@@ -36,7 +36,7 @@ public interface UserApi {
 
     @Operation(summary = "Обновить пользователя")
     @PutMapping(value = "/api/user/update", produces = MediaType.APPLICATION_JSON_VALUE)
-    StatusResponse updateUser(@RequestBody UserRequest dto);
+    UserResponse updateUser(@RequestBody UserRequest dto);
 
     @Operation(summary = "Удалить пользователя")
     @DeleteMapping(value = "/api/user/delete", produces = MediaType.APPLICATION_JSON_VALUE)
