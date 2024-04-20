@@ -1,6 +1,5 @@
 package com.tinkoffedu.entity;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.tinkoffedu.entity.question.Question;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.Column;
@@ -13,8 +12,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.Type;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -36,8 +35,8 @@ public class Quiz {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "questions", nullable = false, columnDefinition = "jsonb")
+    @Column(name = "questions", columnDefinition = "jsonb")
     @Type(JsonType.class)
-    private List<Question> questions = new ArrayList<>();
+    private List<Question> questions;
 
 }

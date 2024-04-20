@@ -7,7 +7,6 @@ import com.tinkoffedu.exception.RefreshTokenException;
 import com.tinkoffedu.repository.UserRefreshTokenRepository;
 import com.tinkoffedu.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +15,6 @@ import java.time.Instant;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserRefreshTokenService {

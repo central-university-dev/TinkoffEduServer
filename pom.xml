@@ -63,6 +63,18 @@
 
             <dependency>
                 <groupId>com.tinkoffedu</groupId>
+                <artifactId>events-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tinkoffedu</groupId>
+                <artifactId>mentee-taker-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tinkoffedu</groupId>
                 <artifactId>rest-api</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -144,7 +156,7 @@
 
             <dependency>
                 <groupId>io.hypersistence</groupId>
-                <artifactId>hypersistence-utils-hibernate-55</artifactId>
+                <artifactId>hypersistence-utils-hibernate-60</artifactId>
                 <version>${hypersistence-utils.version}</version>
             </dependency>
 

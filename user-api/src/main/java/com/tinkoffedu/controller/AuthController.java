@@ -14,14 +14,12 @@ import com.tinkoffedu.service.UserRefreshTokenService;
 import com.tinkoffedu.utils.JwtTokenUtils;
 import com.tinkoffedu.utils.UserPermissionUtils;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class AuthController implements AuthApi {

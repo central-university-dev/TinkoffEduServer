@@ -21,7 +21,7 @@
             </column>
             <column name="image_filename" type="varchar(256)"/>
             <column name="quiz_id" type="bigint">
-                <constraints nullable="false"
+                <constraints nullable="true"
                              foreignKeyName="fk_event_quiz_quiz"
                              referencedTableName="quiz"
                              referencedColumnNames="id"/>

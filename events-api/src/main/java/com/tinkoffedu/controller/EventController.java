@@ -8,10 +8,8 @@ import com.tinkoffedu.endpoints.EventApi;
 import com.tinkoffedu.service.EventService;
 import com.tinkoffedu.service.QuizService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class EventController implements EventApi {

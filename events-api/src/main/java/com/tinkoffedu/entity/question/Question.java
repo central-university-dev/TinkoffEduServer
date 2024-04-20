@@ -1,18 +1,11 @@
 package com.tinkoffedu.entity.question;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import lombok.Builder;
 
 import java.io.Serializable;
 import java.util.List;
 
-@Getter
-@Setter
-@Accessors(chain = true)
-public class Question implements Serializable {
+@Builder
+public record Question(String question, QuestionType type, List<Answer> answers) implements Serializable {
 
-    String question;
-    QuestionType type;
-    List<Answer> answers;
 }

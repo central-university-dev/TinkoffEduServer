@@ -7,10 +7,8 @@ import com.tinkoffedu.endpoints.UserApi;
 import com.tinkoffedu.security.UserAuthProviderService;
 import com.tinkoffedu.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class UserController implements UserApi {

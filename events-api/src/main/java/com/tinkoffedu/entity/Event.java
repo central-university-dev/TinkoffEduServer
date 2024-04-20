@@ -1,5 +1,6 @@
 package com.tinkoffedu.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -44,7 +45,7 @@ public class Event {
     @Column(name = "image_filename")
     private String imageFilename;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "quiz_id", referencedColumnName = "id")
     private Quiz quiz;
 
