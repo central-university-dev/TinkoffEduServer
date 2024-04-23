@@ -14,12 +14,14 @@ public interface UserMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", expression = "java(encoder.encode(dto.password()))")
+    @Mapping(target = "telegramId", ignore = true)
     @Mapping(target = "roles", ignore = true)
     @Mapping(target = "userRefreshTokens", ignore = true)
     User map(UserRequest dto, PasswordEncoder encoder);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", ignore = true)
+    @Mapping(target = "telegramId", ignore = true)
     @Mapping(target = "roles", ignore = true)
     @Mapping(target = "userRefreshTokens", ignore = true)
     User map(UserRequest dto);

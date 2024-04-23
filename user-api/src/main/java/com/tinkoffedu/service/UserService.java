@@ -14,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -38,7 +40,7 @@ public class UserService {
                     () -> new NotFoundException(Role.class)
                 );
                 var user = mapper.map(dto, passwordEncoder);
-                user.addRole(defaultRole);
+                user.setRoles(Set.of(defaultRole));
                 repository.save(user);
             }
         );
@@ -72,6 +74,14 @@ public class UserService {
             () -> new NotFoundException(User.class)
         );
         repository.delete(existingUser);
+    }
+
+    @Transactional
+    public void addUserTelegramId(Long id, String telegramId) {
+        var existingUser = repository.findById(id).orElseThrow(
+            () -> new NotFoundException(User.class)
+        );
+        repository.save(existingUser.setTelegramId(telegramId));
     }
 
     // TODO: сделать нормальную валидацию

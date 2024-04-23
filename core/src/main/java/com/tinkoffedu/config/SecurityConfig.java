@@ -2,12 +2,14 @@ package com.tinkoffedu.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-import com.tinkoffedu.security.JwtAuthorizationFilter;
+import com.tinkoffedu.filter.InternalJwtAuthorizationFilter;
+import com.tinkoffedu.security.UserJwtAuthorizationFilter;
 import com.tinkoffedu.security.UserAuthDetailsService;
 import com.tinkoffedu.security.UserDaoAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -32,7 +35,8 @@ public class SecurityConfig {
 
     private final UserAuthDetailsService userAuthDetailsService;
     private final UserDaoAuthenticationProvider userDaoAuthenticationProvider;
-    private final JwtAuthorizationFilter jwtAuthorizationFilter;
+    private final InternalJwtAuthorizationFilter internalJwtAuthorizationFilter;
+    private final UserJwtAuthorizationFilter userJwtAuthorizationFilter;
 
     @Bean
     public AuthenticationManager authenticationManager(
@@ -45,6 +49,23 @@ public class SecurityConfig {
     }
 
     @Bean
+    @Order(1)
+    public SecurityFilterChain internalFilterChain(HttpSecurity http) throws Exception {
+        return http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/internal/**").authenticated()
+                .anyRequest().permitAll()
+            )
+            .httpBasic(withDefaults())
+            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .addFilterBefore(internalJwtAuthorizationFilter, BasicAuthenticationFilter.class)
+            .csrf(AbstractHttpConfigurer::disable)
+            .exceptionHandling(configurer -> configurer.authenticationEntryPoint(authEntryPoint()))
+            .build();
+    }
+
+    @Bean
+    @Order(2)
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
             .authorizeHttpRequests(auth -> auth
@@ -55,7 +76,7 @@ public class SecurityConfig {
             .httpBasic(withDefaults())
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authenticationProvider(userDaoAuthenticationProvider)
-            .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(userJwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
             .csrf(AbstractHttpConfigurer::disable)
             .exceptionHandling(configurer -> configurer.authenticationEntryPoint(authEntryPoint()))
             .build();

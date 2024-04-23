@@ -4,6 +4,7 @@ import com.tinkoffedu.dto.status.StatusResponse;
 import com.tinkoffedu.exception.InvalidArgumentException;
 import com.tinkoffedu.exception.NotFoundException;
 import com.tinkoffedu.exception.RefreshTokenException;
+import jakarta.validation.ConstraintViolationException;
 import org.postgresql.util.PSQLException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,8 @@ public class ExceptionHandlers {
         MissingServletRequestParameterException.class,
         MethodArgumentNotValidException.class,
         HttpMessageNotReadableException.class,
-        PSQLException.class
+        PSQLException.class,
+        ConstraintViolationException.class
     })
     public ResponseEntity<StatusResponse> handleBadRequestException(Exception e) {
         var status = HttpStatus.BAD_REQUEST;

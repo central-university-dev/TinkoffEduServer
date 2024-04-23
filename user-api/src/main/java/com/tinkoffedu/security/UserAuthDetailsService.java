@@ -1,8 +1,9 @@
 package com.tinkoffedu.security;
 
+import static com.tinkoffedu.utils.UserPermissionUtils.getAllowedAuthorities;
+
 import com.tinkoffedu.dto.UserAuthDetails;
 import com.tinkoffedu.repository.UserRepository;
-import com.tinkoffedu.utils.UserPermissionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserAuthDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private final UserPermissionUtils userPermissionUtils;
 
     @Override
     @Transactional(readOnly = true)
@@ -23,7 +23,7 @@ public class UserAuthDetailsService implements UserDetailsService {
         var user = userRepository.findByEmail(email).orElseThrow(
             () -> new UsernameNotFoundException("User with email %s not found".formatted(email))
         );
-        var authorities = userPermissionUtils.getAllowedAuthorities(user.getRoles());
+        var authorities = getAllowedAuthorities(user.getRoles());
         return UserAuthDetails.builder()
             .id(user.getId())
             .email(user.getEmail())

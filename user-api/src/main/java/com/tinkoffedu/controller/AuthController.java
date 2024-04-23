@@ -1,5 +1,7 @@
 package com.tinkoffedu.controller;
 
+import static com.tinkoffedu.utils.UserPermissionUtils.getAllowedAuthorities;
+
 import com.tinkoffedu.dto.UserAuthDetails;
 import com.tinkoffedu.dto.auth.AuthRequest;
 import com.tinkoffedu.dto.auth.AuthResponse;
@@ -11,8 +13,7 @@ import com.tinkoffedu.entity.UserRefreshToken;
 import com.tinkoffedu.exception.InvalidArgumentException;
 import com.tinkoffedu.mapper.UserAuthDetailsMapper;
 import com.tinkoffedu.service.UserRefreshTokenService;
-import com.tinkoffedu.utils.JwtTokenUtils;
-import com.tinkoffedu.utils.UserPermissionUtils;
+import com.tinkoffedu.utils.UserJwtTokenUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -26,9 +27,8 @@ public class AuthController implements AuthApi {
 
     private final AuthenticationManager authenticationManager;
     private final UserRefreshTokenService userRefreshTokenService;
-    private final UserPermissionUtils userPermissionUtils;
     private final UserAuthDetailsMapper userAuthDetailsMapper;
-    private final JwtTokenUtils tokenUtils;
+    private final UserJwtTokenUtils tokenUtils;
 
     @Override
     public AuthResponse login(AuthRequest request) {
@@ -52,7 +52,7 @@ public class AuthController implements AuthApi {
         UserRefreshToken refreshToken = userRefreshTokenService.updateRefreshToken(request.refreshToken());
         User user = refreshToken.getUser();
         String accessToken = tokenUtils.createToken(
-            userAuthDetailsMapper.map(user, userPermissionUtils.getAllowedAuthorities(user.getRoles()))
+            userAuthDetailsMapper.map(user, getAllowedAuthorities(user.getRoles()))
         );
         return new RefreshTokenResponse(accessToken,  refreshToken.getRefreshToken());
     }

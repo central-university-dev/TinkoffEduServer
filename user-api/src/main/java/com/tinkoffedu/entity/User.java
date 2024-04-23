@@ -53,6 +53,12 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name = "educational_group")
+    private String group;
+
+    @Column(name = "telegram_id")
+    private String telegramId;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "user_role",

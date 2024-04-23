@@ -1,7 +1,10 @@
 package com.tinkoffedu.security;
 
+import static com.tinkoffedu.utils.JwtUtils.isTokenExpired;
+import static com.tinkoffedu.utils.JwtUtils.resolveClaims;
+import static com.tinkoffedu.utils.JwtUtils.resolveToken;
+
 import com.tinkoffedu.dto.UserAuthDetails;
-import com.tinkoffedu.utils.JwtTokenUtils;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -9,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,9 +28,10 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class JwtAuthorizationFilter extends OncePerRequestFilter {
+public class UserJwtAuthorizationFilter extends OncePerRequestFilter {
 
-    private final JwtTokenUtils tokenUtils;
+    @Value("${security.jwt.secret-key}")
+    private String secretKey;
 
     @Override
     protected void doFilterInternal(
@@ -34,13 +39,13 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         @NonNull HttpServletResponse response,
         @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        String token = tokenUtils.resolveToken(request);
+        String token = resolveToken(request);
         if (token == null) {
             filterChain.doFilter(request, response);
             return;
         }
-        Claims claims = tokenUtils.resolveClaims(request);
-        if (claims == null || tokenUtils.isTokenExpired(claims)) {
+        Claims claims = resolveClaims(request, secretKey);
+        if (claims == null || isTokenExpired(claims)) {
             filterChain.doFilter(request, response);
             return;
         }
