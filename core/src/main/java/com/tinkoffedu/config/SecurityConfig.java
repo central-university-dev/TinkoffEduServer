@@ -3,9 +3,9 @@ package com.tinkoffedu.config;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 import com.tinkoffedu.filter.InternalJwtAuthorizationFilter;
-import com.tinkoffedu.security.UserJwtAuthorizationFilter;
 import com.tinkoffedu.security.UserAuthDetailsService;
 import com.tinkoffedu.security.UserDaoAuthenticationProvider;
+import com.tinkoffedu.security.UserJwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

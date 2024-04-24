@@ -2,16 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
-    <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <artifactId>edu-backend</artifactId>
         <groupId>com.tinkoffedu</groupId>
         <version>${revision}</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>core</artifactId>
+    <artifactId>mentee-taker-bot</artifactId>
 
     <properties>
         <project.dir>${project.parent.basedir}</project.dir>
@@ -20,22 +18,12 @@
     <dependencies>
         <dependency>
             <groupId>com.tinkoffedu</groupId>
-            <artifactId>user-api</artifactId>
+            <artifactId>common</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.tinkoffedu</groupId>
-            <artifactId>events-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.tinkoffedu</groupId>
-            <artifactId>mentee-taker-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.tinkoffedu</groupId>
-            <artifactId>mentee-taker-bot</artifactId>
+            <artifactId>rest-api</artifactId>
         </dependency>
 
         <dependency>
@@ -70,6 +58,16 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-jackson</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
@@ -80,8 +78,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
         </dependency>
 
         <dependency>
@@ -95,13 +93,13 @@
         </dependency>
 
         <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots</artifactId>
         </dependency>
     </dependencies>
 
