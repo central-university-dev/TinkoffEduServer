@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class BotConfig {
 
     private String name;
+    private String username;
     private String token;
 
 }

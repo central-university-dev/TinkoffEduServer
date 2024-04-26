@@ -24,6 +24,11 @@ public class HelpCommandService implements CommandService {
     }
 
     @Override
+    public Boolean shouldBeInMenu() {
+        return true;
+    }
+
+    @Override
     public SendMessage getMessageOnUpdate(Update update) {
         return SendMessage.builder()
             .chatId(update.getMessage().getChatId())

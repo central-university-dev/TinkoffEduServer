@@ -2,14 +2,16 @@ package com.tinkoffedu.controller;
 
 import static com.tinkoffedu.utils.DataEncryptUtils.decrypt;
 
-import com.tinkoffedu.dto.internal.UserTelegramRequest;
-import com.tinkoffedu.dto.status.StatusResponse;
+import com.tinkoffedu.dto.internal.UserTelegramBindRequest;
+import com.tinkoffedu.dto.internal.UserTelegramBindResponse;
 import com.tinkoffedu.internal.UserInternalApi;
 import com.tinkoffedu.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.bind.annotation.RestController;
 
+@Primary
 @RestController
 @RequiredArgsConstructor
 public class UserInternalController implements UserInternalApi {
@@ -19,13 +21,15 @@ public class UserInternalController implements UserInternalApi {
     private final UserService userService;
 
     @Override
-    public StatusResponse addUserTelegram(UserTelegramRequest dto) {
+    public UserTelegramBindResponse addUserTelegram(UserTelegramBindRequest dto) {
         try {
-            var id = (long) decrypt(dto.userToken(), secretKey).get("id");
-            userService.addUserTelegramId(id, dto.telegramUserId());
+            var id = decrypt(dto.userToken(), secretKey).get("id", Long.class);
+            return userService.addUserTelegramId(id, dto.telegramUserId());
         } catch (Exception e) {
-            return new StatusResponse("Unexpected exception while assigning telegram id to user", e.getMessage());
+            return new UserTelegramBindResponse(null, null,
+                "Unexpected exception while assigning telegram id to user: %s".formatted(e.getMessage())
+            );
         }
-        return new StatusResponse("ok", null);
     }
+
 }

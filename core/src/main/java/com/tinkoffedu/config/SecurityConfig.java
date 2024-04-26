@@ -21,7 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -58,7 +57,7 @@ public class SecurityConfig {
             )
             .httpBasic(withDefaults())
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .addFilterBefore(internalJwtAuthorizationFilter, BasicAuthenticationFilter.class)
+            .addFilterBefore(internalJwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
             .csrf(AbstractHttpConfigurer::disable)
             .exceptionHandling(configurer -> configurer.authenticationEntryPoint(authEntryPoint()))
             .build();
@@ -70,7 +69,7 @@ public class SecurityConfig {
         return http
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/error/**", "/swagger/**", "/v3/api-docs/**").permitAll()
-                .requestMatchers("/api/auth/**", "/api/user/register").permitAll()
+                .requestMatchers("/internal/**", "/api/auth/**", "/api/user/register").permitAll()
                 .anyRequest().authenticated()
             )
             .httpBasic(withDefaults())

@@ -19,7 +19,7 @@
             <column name="last_name" type="varchar(256)"/>
             <column name="phone" type="varchar(16)"/>
             <column name="educational_group" type="varchar(32)"/>
-            <column name="telegram_id" type="varchar(32)"/>
+            <column name="telegram_id" type="bigint"/>
         </createTable>
     </changeSet>
     <changeSet id="TINKOFF-EDU-2023-12-01-create-user-id-seq" author="mdarunova">

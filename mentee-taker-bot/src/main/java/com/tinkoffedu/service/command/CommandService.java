@@ -9,5 +9,7 @@ public interface CommandService {
 
     String getDefinition();
 
+    Boolean shouldBeInMenu();
+
     SendMessage getMessageOnUpdate(Update update);
 }

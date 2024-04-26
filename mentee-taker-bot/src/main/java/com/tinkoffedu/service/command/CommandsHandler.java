@@ -16,8 +16,8 @@ public class CommandsHandler {
         this.commands = commands;
     }
 
-    public SendMessage apply(Update update) {
-        var command = update.getMessage().getText().split(" ")[0];
+    public SendMessage apply(Update update, String text) {
+        var command = text.split(" ")[0];
         var service = commands.get(command);
         return service == null ? UnknownCommandService.getMessageOnUpdate(update) : service.getMessageOnUpdate(update);
     }

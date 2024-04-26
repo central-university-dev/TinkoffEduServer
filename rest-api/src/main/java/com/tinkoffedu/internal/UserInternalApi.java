@@ -1,6 +1,7 @@
 package com.tinkoffedu.internal;
 
-import com.tinkoffedu.dto.internal.UserTelegramRequest;
+import com.tinkoffedu.dto.internal.UserTelegramBindRequest;
+import com.tinkoffedu.dto.internal.UserTelegramBindResponse;
 import com.tinkoffedu.dto.status.StatusResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -23,7 +24,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface UserInternalApi {
 
     @Operation(summary = "Добавить id пользователя в телеграмме")
-    @PostMapping(value = "/internal/user/add-user-telegram", produces = MediaType.APPLICATION_JSON_VALUE)
-    StatusResponse addUserTelegram(@RequestBody UserTelegramRequest dto);
+    @PostMapping(
+        value = "/internal/user/add-user-telegram",
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    UserTelegramBindResponse addUserTelegram(@RequestBody UserTelegramBindRequest dto);
 
 }

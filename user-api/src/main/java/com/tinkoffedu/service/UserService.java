@@ -1,5 +1,6 @@
 package com.tinkoffedu.service;
 
+import com.tinkoffedu.dto.internal.UserTelegramBindResponse;
 import com.tinkoffedu.dto.user.UserRequest;
 import com.tinkoffedu.dto.user.UserResponse;
 import com.tinkoffedu.entity.Role;
@@ -10,6 +11,7 @@ import com.tinkoffedu.mapper.UserMapper;
 import com.tinkoffedu.repository.RoleRepository;
 import com.tinkoffedu.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +24,9 @@ public class UserService {
 
     private static final String DEFAULT_ROLE_NAME = "ROLE_STUDENT";
 
+    @Value("${data.encrypt.secret-key}")
+    private String secretKey;
+
     private final UserRepository repository;
     private final UserMapper mapper;
     private final RoleRepository roleRepository;
@@ -31,18 +36,17 @@ public class UserService {
     public void createUser(UserRequest dto) {
         validateRequest(dto);
 
-        repository.findByEmail(dto.email()).ifPresentOrElse(
+        repository.findByEmail(dto.email()).ifPresent(
             user -> {
                 throw new InvalidArgumentException("User with email %s already exists".formatted(user.getEmail()));
-            },
-            () -> {
-                var defaultRole = roleRepository.findByName(DEFAULT_ROLE_NAME).orElseThrow(
-                    () -> new NotFoundException(Role.class)
-                );
-                var user = mapper.map(dto, passwordEncoder);
-                user.setRoles(Set.of(defaultRole));
-                repository.save(user);
             }
+        );
+
+        var defaultRole = roleRepository.findByName(DEFAULT_ROLE_NAME).orElseThrow(
+            () -> new NotFoundException(Role.class)
+        );
+        var user = repository.save(
+            mapper.map(dto, passwordEncoder).setRoles(Set.of(defaultRole))
         );
     }
 
@@ -77,11 +81,11 @@ public class UserService {
     }
 
     @Transactional
-    public void addUserTelegramId(Long id, String telegramId) {
+    public UserTelegramBindResponse addUserTelegramId(Long id, Long telegramId) {
         var existingUser = repository.findById(id).orElseThrow(
             () -> new NotFoundException(User.class)
         );
-        repository.save(existingUser.setTelegramId(telegramId));
+        return mapper.mapTelegram(repository.save(existingUser.setTelegramId(telegramId)));
     }
 
     // TODO: сделать нормальную валидацию

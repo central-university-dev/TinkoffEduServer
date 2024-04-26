@@ -24,7 +24,7 @@ public class InternalJwtTokenUtils {
         return Jwts.builder()
             .setExpiration(Date.from(Instant.now().plusMillis(TimeUnit.MINUTES.toMillis(expirationMinutes))))
             .signWith(SignatureAlgorithm.HS256, secretKey)
-            .addClaims(Collections.singletonMap("isClient", true))
+            .addClaims(Collections.singletonMap("login", "internal-client"))
             .compact();
     }
 

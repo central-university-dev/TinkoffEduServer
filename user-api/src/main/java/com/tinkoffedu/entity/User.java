@@ -57,7 +57,7 @@ public class User {
     private String group;
 
     @Column(name = "telegram_id")
-    private String telegramId;
+    private Long telegramId;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

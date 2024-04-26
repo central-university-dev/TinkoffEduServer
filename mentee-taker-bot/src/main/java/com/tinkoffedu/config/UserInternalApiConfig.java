@@ -24,8 +24,8 @@ public class UserInternalApiConfig {
     private String userApiUrl;
     private final InternalJwtInterceptor jwtInterceptor;
 
-    @Bean
-    public UserInternalApi userInternalApi() {
+    @Bean("userInternalApiClient")
+    public UserInternalApi userInternalApiClient() {
         return Feign.builder()
             .encoder(new JacksonEncoder(List.of(new JavaTimeModule())))
             .decoder(new JacksonDecoder(List.of(new JavaTimeModule())))

@@ -1,6 +1,7 @@
 package com.tinkoffedu.mapper;
 
 import com.tinkoffedu.config.MapStructConfig;
+import com.tinkoffedu.dto.internal.UserTelegramBindResponse;
 import com.tinkoffedu.dto.user.UserRequest;
 import com.tinkoffedu.dto.user.UserResponse;
 import com.tinkoffedu.entity.User;
@@ -27,4 +28,8 @@ public interface UserMapper {
     User map(UserRequest dto);
 
     UserResponse map(User user);
+
+
+    @Mapping(target = "error", ignore = true)
+    UserTelegramBindResponse mapTelegram(User user);
 }
