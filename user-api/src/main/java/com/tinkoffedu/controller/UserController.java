@@ -5,6 +5,7 @@ import com.tinkoffedu.dto.user.UserRequest;
 import com.tinkoffedu.dto.user.UserResponse;
 import com.tinkoffedu.endpoints.UserApi;
 import com.tinkoffedu.security.UserAuthProviderService;
+import com.tinkoffedu.service.UserCreateNotificationService;
 import com.tinkoffedu.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,10 +16,12 @@ public class UserController implements UserApi {
 
     private final UserAuthProviderService authProviderService;
     private final UserService userService;
+    private final UserCreateNotificationService notificationService;
 
     @Override
     public StatusResponse createUser(UserRequest dto) {
-        userService.createUser(dto);
+        Long id = userService.createUser(dto);
+        notificationService.notify(id, dto);
         return new StatusResponse("ok", null);
     }
 

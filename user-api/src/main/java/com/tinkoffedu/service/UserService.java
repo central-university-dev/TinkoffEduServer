@@ -11,7 +11,6 @@ import com.tinkoffedu.mapper.UserMapper;
 import com.tinkoffedu.repository.RoleRepository;
 import com.tinkoffedu.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,16 +23,13 @@ public class UserService {
 
     private static final String DEFAULT_ROLE_NAME = "ROLE_STUDENT";
 
-    @Value("${data.encrypt.secret-key}")
-    private String secretKey;
-
     private final UserRepository repository;
     private final UserMapper mapper;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void createUser(UserRequest dto) {
+    public Long createUser(UserRequest dto) {
         validateRequest(dto);
 
         repository.findByEmail(dto.email()).ifPresent(
@@ -41,13 +37,11 @@ public class UserService {
                 throw new InvalidArgumentException("User with email %s already exists".formatted(user.getEmail()));
             }
         );
-
         var defaultRole = roleRepository.findByName(DEFAULT_ROLE_NAME).orElseThrow(
             () -> new NotFoundException(Role.class)
         );
-        var user = repository.save(
-            mapper.map(dto, passwordEncoder).setRoles(Set.of(defaultRole))
-        );
+        var user = mapper.map(dto, passwordEncoder).setRoles(Set.of(defaultRole));
+        return repository.save(user).getId();
     }
 
     @Transactional(readOnly = true)

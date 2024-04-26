@@ -20,6 +20,7 @@
         <module>events-api</module>
         <module>mentee-taker-api</module>
         <module>mentee-taker-bot</module>
+        <module>mail-server</module>
     </modules>
 
     <properties>
@@ -91,6 +92,12 @@
             </dependency>
 
             <dependency>
+                <groupId>com.tinkoffedu</groupId>
+                <artifactId>mail-server</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
@@ -138,6 +145,12 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-jpa</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-mail</artifactId>
                 <version>${spring.boot.version}</version>
             </dependency>
 
