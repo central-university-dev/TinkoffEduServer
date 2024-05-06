@@ -19,7 +19,7 @@ public class CommandsHandler {
     public SendMessage apply(Update update, String text) {
         var command = text.split(" ")[0];
         var service = commands.get(command);
-        return service == null ? UnknownCommandService.getMessageOnUpdate(update) : service.getMessageOnUpdate(update);
+        return service == null ? UnknownCommandService.getMessage(update) : service.getMessageOnUpdate(update);
     }
 
 }

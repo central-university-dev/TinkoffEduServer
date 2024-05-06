@@ -1,4 +1,4 @@
-package com.tinkoffedu.service.command;
+package com.tinkoffedu.service.notification;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -7,17 +7,22 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 @Component
 @RequiredArgsConstructor
-public class UnknownCommandService {
+public class PreMeetingNotificationService {
 
     private static final String MESSAGE = """
-        Так, это что такое, а?
-        Ты что-то в натуре попутал, давай всё по-новой!
+        MUCHAS GRACIAS AFICION, ESTO ES PARA VOSOTROS!
+                
+        У вас сейчас встреча с %s. Не смейте пропускать, а то получите по JOPE!!!
+                
+        SIUUUUUUUUUU!
         """;
 
-    public static SendMessage getMessage(Update update) {
+    public SendMessage getMessage(Update update) {
         return SendMessage.builder()
             .chatId(update.getMessage().getChatId())
             .text(MESSAGE)
+            .parseMode("Markdown")
             .build();
     }
+
 }

@@ -24,7 +24,7 @@ public class UserInternalController implements UserInternalApi {
     public UserTelegramBindResponse addUserTelegram(UserTelegramBindRequest dto) {
         try {
             var id = decrypt(dto.userToken(), secretKey).get("id", Long.class);
-            return userService.addUserTelegramId(id, dto.telegramUserId());
+            return userService.addUserTelegramId(id, dto.telegramChatId());
         } catch (Exception e) {
             return new UserTelegramBindResponse(null, null,
                 "Unexpected exception while assigning telegram id to user: %s".formatted(e.getMessage())

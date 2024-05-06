@@ -50,7 +50,7 @@ public class TokenCommandService implements CommandService {
         var text = update.getMessage().getText();
         var token = text.substring(text.lastIndexOf(COMMAND) + COMMAND.length()).trim();
         var result = userInternalApiService.addUserTelegram(
-            new UserTelegramBindRequest(token, update.getMessage().getFrom().getId())
+            new UserTelegramBindRequest(token, update.getMessage().getChatId())
         );
         return SendMessage.builder()
             .chatId(update.getMessage().getChatId())

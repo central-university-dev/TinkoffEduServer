@@ -41,7 +41,7 @@ public class MenteeBotService extends TelegramLongPollingBot {
         }
         var text = update.getMessage().getText().replace(botConfig.getUsername(), "").trim();
         sendMessage(
-            text.startsWith("/") ? handler.apply(update, text) : UnknownCommandService.getMessageOnUpdate(update)
+            text.startsWith("/") ? handler.apply(update, text) : UnknownCommandService.getMessage(update)
         );
     }
 
