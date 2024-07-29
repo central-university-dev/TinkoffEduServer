@@ -1,0 +1,39 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="TINKOFF-EDU-2024-05-01-mentor-mentee-table" author="mdarunova">
+        <createTable tableName="mentor_mentee">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="mentor_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mentee_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mentor_chat_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mentee_chat_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mentor_name" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mentee_name" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="TINKOFF-EDU-2024-05-01-create-mentor-mentee-id-seq" author="mdarunova">
+        <createSequence
+                sequenceName="mentor_mentee_seq"
+                startValue="1"
+                incrementBy="1"/>
+    </changeSet>
+
+</databaseChangeLog>

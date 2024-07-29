@@ -1,0 +1,34 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="TINKOFF-EDU-2024-05-01-mentor-meeting-note-table" author="mdarunova">
+        <createTable tableName="mentor_meeting_note">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="send_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_sent" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="notes" type="jsonb"/>
+            <column name="mentor_mentee_id" type="bigint">
+                <constraints nullable="true"
+                             foreignKeyName="fk_mentor_meeting_note_mentor_mentee"
+                             referencedTableName="mentor_mentee"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="TINKOFF-EDU-2024-05-01-mentor-meeting-note-id-seq" author="mdarunova">
+        <createSequence
+                sequenceName="mentor_meeting_note_seq"
+                startValue="1"
+                incrementBy="1"/>
+    </changeSet>
+
+</databaseChangeLog>

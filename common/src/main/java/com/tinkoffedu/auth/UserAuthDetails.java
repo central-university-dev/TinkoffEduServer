@@ -1,4 +1,4 @@
-package com.tinkoffedu.dto;
+package com.tinkoffedu.auth;
 
 import lombok.Builder;
 import lombok.Data;

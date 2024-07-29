@@ -2,7 +2,7 @@ package com.tinkoffedu.security;
 
 import static com.tinkoffedu.utils.UserPermissionUtils.getAllowedAuthorities;
 
-import com.tinkoffedu.dto.UserAuthDetails;
+import com.tinkoffedu.auth.UserAuthDetails;
 import com.tinkoffedu.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

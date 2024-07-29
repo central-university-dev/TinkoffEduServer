@@ -1,6 +1,6 @@
 package com.tinkoffedu.utils;
 
-import com.tinkoffedu.dto.UserAuthDetails;
+import com.tinkoffedu.auth.UserAuthDetails;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;

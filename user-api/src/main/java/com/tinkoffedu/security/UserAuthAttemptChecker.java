@@ -1,7 +1,7 @@
 package com.tinkoffedu.security;
 
+import com.tinkoffedu.auth.UserAuthDetails;
 import com.tinkoffedu.config.BruteforceConfig;
-import com.tinkoffedu.dto.UserAuthDetails;
 import com.tinkoffedu.service.UserFailedLoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.LockedException;

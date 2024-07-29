@@ -2,7 +2,7 @@ package com.tinkoffedu.controller;
 
 import static com.tinkoffedu.utils.UserPermissionUtils.getAllowedAuthorities;
 
-import com.tinkoffedu.dto.UserAuthDetails;
+import com.tinkoffedu.auth.UserAuthDetails;
 import com.tinkoffedu.dto.auth.AuthRequest;
 import com.tinkoffedu.dto.auth.AuthResponse;
 import com.tinkoffedu.dto.auth.RefreshTokenRequest;

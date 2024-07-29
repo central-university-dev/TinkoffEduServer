@@ -1,6 +1,6 @@
 package com.tinkoffedu.service;
 
-import com.tinkoffedu.dto.UserAuthDetails;
+import com.tinkoffedu.auth.UserAuthDetails;
 import com.tinkoffedu.entity.UserFailedLogin;
 import com.tinkoffedu.repository.UserFailedLoginRepository;
 import com.tinkoffedu.security.UserAuthDetailsService;

@@ -30,13 +30,14 @@ public class MeetingService {
     private final MentorMenteeRepository mentorMenteeRepository;
 
     @Transactional
-    public void createMeetings(MeetingsCreateRequest dto) {
+    public List<MeetingResponse> createMeetings(MeetingsCreateRequest dto) {
         var mentorMentee = mentorMenteeRepository.findByMentorIdAndMenteeId(dto.mentorId(), dto.menteeId()).orElseThrow(
             () -> new NotFoundException(MentorMentee.class)
         );
-        dto.meetingDates().forEach(
-            date -> repository.save(createMeeting(mentorMentee, date))
-        );
+        return dto.meetingDates().stream()
+            .map(date -> repository.save(createMeeting(mentorMentee, date)))
+            .map(meeting -> mapper.map(meeting, mentorMentee.getMentorName(), mentorMentee.getMenteeName()))
+            .toList();
     }
 
     @Transactional

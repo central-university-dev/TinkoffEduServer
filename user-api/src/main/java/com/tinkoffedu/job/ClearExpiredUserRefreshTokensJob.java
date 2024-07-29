@@ -18,7 +18,7 @@ public class ClearExpiredUserRefreshTokensJob {
 
     @Scheduled(cron = "${job.clear-expired-tokens.cron}")
     @SchedulerLock(name = LOCK_NAME, lockAtMostFor = "${job.clear-expired-tokens.lock-at-most-for}")
-    public void sendSalesByCron() {
+    public void clearExpiredUserRefreshTokens() {
         log.debug("Lock {} was successfully acquired. Trying to clear expired tokens", LOCK_NAME);
         userRefreshTokenService.clearExpiredTokens();
         log.debug("Successfully released lock {}", LOCK_NAME);

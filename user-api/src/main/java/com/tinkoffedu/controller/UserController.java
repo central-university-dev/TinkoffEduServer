@@ -1,10 +1,10 @@
 package com.tinkoffedu.controller;
 
+import com.tinkoffedu.auth.UserAuthProviderService;
 import com.tinkoffedu.dto.status.StatusResponse;
 import com.tinkoffedu.dto.user.UserRequest;
 import com.tinkoffedu.dto.user.UserResponse;
 import com.tinkoffedu.endpoints.UserApi;
-import com.tinkoffedu.security.UserAuthProviderService;
 import com.tinkoffedu.service.UserCreateNotificationService;
 import com.tinkoffedu.service.UserService;
 import lombok.RequiredArgsConstructor;

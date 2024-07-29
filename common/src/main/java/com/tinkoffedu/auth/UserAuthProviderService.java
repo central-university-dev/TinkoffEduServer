@@ -1,6 +1,5 @@
-package com.tinkoffedu.security;
+package com.tinkoffedu.auth;
 
-import com.tinkoffedu.dto.UserAuthDetails;
 import com.tinkoffedu.exception.TinkoffEduException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

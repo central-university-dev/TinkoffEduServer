@@ -1,6 +1,6 @@
 package com.tinkoffedu.dto.note;
 
-public record PreMeetingNoteRequest(
+public record PreMeetingNoteResponse(
     // Общие индикаторы
     Integer mood,
     Integer weekBusyness,

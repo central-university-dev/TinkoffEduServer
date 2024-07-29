@@ -23,7 +23,7 @@ import java.time.Instant;
 @Accessors(chain = true)
 @Entity
 @Table(name = "mentor_mentee_meeting")
-@SequenceGenerator(allocationSize = 1, name = "mentor_mentee_meeting_seq", sequenceName = "mentor_mentee_meetings_seq")
+@SequenceGenerator(allocationSize = 1, name = "mentor_mentee_meeting_seq", sequenceName = "mentor_mentee_meeting_seq")
 public class Meeting {
 
     @Id
@@ -38,15 +38,15 @@ public class Meeting {
     @JoinColumn(name = "mentor_mentee_id", referencedColumnName = "id")
     private MentorMentee mentorMentee;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "pre_meeting_note_id", referencedColumnName = "id")
     private PreMeetingNote preMeetingNote;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "mentor_meeting_note_id", referencedColumnName = "id")
     private MentorMeetingNote mentorMeetingNote;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "mentee_meeting_note_id", referencedColumnName = "id")
     private MenteeMeetingNote menteeMeetingNote;
 

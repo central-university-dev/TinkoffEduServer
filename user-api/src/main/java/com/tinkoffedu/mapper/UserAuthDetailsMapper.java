@@ -1,7 +1,7 @@
 package com.tinkoffedu.mapper;
 
+import com.tinkoffedu.auth.UserAuthDetails;
 import com.tinkoffedu.config.MapStructConfig;
-import com.tinkoffedu.dto.UserAuthDetails;
 import com.tinkoffedu.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

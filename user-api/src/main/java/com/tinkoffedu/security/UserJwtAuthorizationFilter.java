@@ -4,7 +4,7 @@ import static com.tinkoffedu.utils.JwtUtils.isTokenExpired;
 import static com.tinkoffedu.utils.JwtUtils.resolveClaims;
 import static com.tinkoffedu.utils.JwtUtils.resolveToken;
 
-import com.tinkoffedu.dto.UserAuthDetails;
+import com.tinkoffedu.auth.UserAuthDetails;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

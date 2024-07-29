@@ -26,7 +26,7 @@ public class MenteeBotService extends TelegramLongPollingBot {
         super(botConfig.getToken());
         this.botConfig = botConfig;
         this.handler = handler;
-        this.setMenteeBotCommands(commandServices);
+        this.setBotCommands(commandServices);
     }
 
     @Override
@@ -45,7 +45,15 @@ public class MenteeBotService extends TelegramLongPollingBot {
         );
     }
 
-    private void setMenteeBotCommands(List<CommandService> commandServices) {
+    public void sendMessage(SendMessage sendMessage) {
+        try {
+            execute(sendMessage);
+        } catch (TelegramApiException e) {
+            log.error("Error while sending telegram message: {}", e.getMessage());
+        }
+    }
+
+    private void setBotCommands(List<CommandService> commandServices) {
         var commandsList = commandServices.stream()
             .filter(CommandService::shouldBeInMenu)
             .map(service -> new BotCommand(service.getCommand(), service.getDefinition()))
@@ -58,14 +66,6 @@ public class MenteeBotService extends TelegramLongPollingBot {
             execute(commands);
         } catch (TelegramApiException e) {
             log.error("Error while trying to set telegram bot commands list: {}", e.getMessage());
-        }
-    }
-
-    private void sendMessage(SendMessage sendMessage) {
-        try {
-            execute(sendMessage);
-        } catch (TelegramApiException e) {
-            log.error("Error while sending telegram message: {}", e.getMessage());
         }
     }
 
